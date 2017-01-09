@@ -95,9 +95,11 @@ class Chef
                      {}
                    end
 
+        ENV['TMPDIR'] = '/tmp'
+
         bash "Initialize rbenv (#{opts[:user] || 'system'})" do
           code %(PATH="#{prefix}/bin:$PATH" rbenv init -)
-          environment({ 'RBENV_ROOT' => prefix }.merge(init_env))
+          environment({ 'RBENV_ROOT' => prefix, 'TMPDIR' => '/tmp' }.merge(init_env))
           user opts[:user] if opts[:user]
           group opts[:group] if opts[:group]
         end
